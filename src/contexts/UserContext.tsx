@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useState } from "react";
+import { createContext, PropsWithChildren } from "react";
 
 import useLocalStorage from "../hooks/useLocalStorage";
 import { LoginResponse } from "../services/authApi";

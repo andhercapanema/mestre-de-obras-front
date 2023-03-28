@@ -13,58 +13,6 @@ export function Auth(props: PropsWithChildren & { title: string }) {
                 <Avatar alt="Mestre de Obras Logo" src={logo} />
                 <FormLabel>{title}</FormLabel>
                 {children}
-                {/* <form onSubmit={registerUser}>
-                    <TextField
-                        id="outlined-basic"
-                        label="nome completo"
-                        variant="outlined"
-                        required
-                        name="name"
-                        onChange={handleForm}
-                        value={name}
-                    />
-                    <TextField
-                        id="outlined-basic"
-                        label="e-mail"
-                        variant="outlined"
-                        required
-                        name="email"
-                        onChange={handleForm}
-                        value={email}
-                        type="email"
-                    />
-                    <TextField
-                        id="outlined-basic"
-                        label="senha"
-                        variant="outlined"
-                        type="password"
-                        required
-                        name="password"
-                        onChange={handleForm}
-                        value={password}
-                    />
-                    <TextField
-                        id="outlined-basic"
-                        label="confirmar senha"
-                        variant="outlined"
-                        type="password"
-                        required
-                        name="confirmPassword"
-                        onChange={handleForm}
-                        value={confirmPassword}
-                    />
-                    <LoadingButton
-                        type="submit"
-                        variant="contained"
-                        disabled={!formIsComplete || !passwordsAreTheSame}
-                        loading={signUpLoading}
-                    >
-                        Criar conta
-                    </LoadingButton>
-                </form>
-                <Link href="/login" underline="hover" color="inherit">
-                    Jé tem uma conta? Faça login
-                </Link> */}
             </FormContainer>
         </StyledPage>
     );
