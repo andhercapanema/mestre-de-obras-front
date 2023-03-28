@@ -1,24 +1,8 @@
-import { Avatar, Box, Container, FormLabel } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import styled from "styled-components";
 import backgroundImg from "../../assets/images/papel-de-parede-adesivo-cimento-queimado.jpg";
-import logo from "../../assets/images/constructor-hat-helmet-protection-svgrepo-com.svg";
-import { PropsWithChildren } from "react";
 
-export function Auth(props: PropsWithChildren & { title: string }) {
-    const { title, children } = props;
-
-    return (
-        <StyledPage>
-            <FormContainer>
-                <Avatar alt="Mestre de Obras Logo" src={logo} />
-                <FormLabel>{title}</FormLabel>
-                {children}
-            </FormContainer>
-        </StyledPage>
-    );
-}
-
-const StyledPage = styled(Container)`
+export const StyledPage = styled(Container)`
     min-height: 500.5px;
     height: 100vh;
     background-image: url(${backgroundImg});
@@ -28,7 +12,7 @@ const StyledPage = styled(Container)`
     justify-content: center;
 ` as typeof Container;
 
-const FormContainer = styled(Box)`
+export const FormContainer = styled(Box)`
     background: #fff;
     display: flex;
     flex-direction: column;
