@@ -1,91 +1,19 @@
-import { Avatar, Box, FormLabel, Link, TextField } from "@mui/material";
-import { Container } from "@mui/system";
+import { Avatar, Box, Container, FormLabel } from "@mui/material";
 import styled from "styled-components";
-import backgroundImg from "../assets/images/papel-de-parede-adesivo-cimento-queimado.jpg";
-import logo from "../assets/images/constructor-hat-helmet-protection-svgrepo-com.svg";
-import { FormEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import useSignUp from "../hooks/api/useSignUp";
-import { LoadingButton } from "@mui/lab";
-import { AxiosError } from "axios";
+import backgroundImg from "../../assets/images/papel-de-parede-adesivo-cimento-queimado.jpg";
+import logo from "../../assets/images/constructor-hat-helmet-protection-svgrepo-com.svg";
+import { PropsWithChildren } from "react";
 
-export type RegistrationForm = {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-};
-
-export function SignUp() {
-    const [form, setForm] = useState<RegistrationForm>({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-    });
-    const { name, email, password, confirmPassword } = form;
-    const [formIsComplete, setFormIsComplete] = useState(false);
-    const [passwordsAreTheSame, setPasswordsAreTheSame] = useState(true);
-
-    const navigate = useNavigate();
-    const { signUpLoading, signUp } = useSignUp();
-
-    function handleForm(
-        e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-    ) {
-        const { name, value } = e.target;
-        setForm({ ...form, [name]: value });
-    }
-
-    async function registerUser(e: FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-
-        try {
-            await signUp({
-                name,
-                email,
-                password,
-            });
-            toast.success("Cadastro realizado com sucesso!");
-            navigate("/login");
-        } catch (err) {
-            const error = err as AxiosError;
-
-            if (error.response?.data)
-                toast.error(error.response.data as string);
-
-            console.error(error.response);
-        }
-    }
-
-    function checkIfFormIsComplete() {
-        let isFinished = true;
-        for (const key in form) {
-            if (form[key as keyof RegistrationForm].length === 0) {
-                isFinished = false;
-            }
-        }
-        setFormIsComplete(isFinished ? true : false);
-    }
-
-    function checkIfPasswordsAreTheSame() {
-        if (password === confirmPassword) return setPasswordsAreTheSame(true);
-
-        setPasswordsAreTheSame(false);
-    }
-
-    useEffect(() => {
-        checkIfFormIsComplete();
-        checkIfPasswordsAreTheSame();
-    }, [form]);
+export function Auth(props: PropsWithChildren & { title: string }) {
+    const { title, children } = props;
 
     return (
         <StyledPage>
             <FormContainer>
                 <Avatar alt="Mestre de Obras Logo" src={logo} />
-                <FormLabel>Cadastro</FormLabel>
-                <form onSubmit={registerUser}>
+                <FormLabel>{title}</FormLabel>
+                {children}
+                {/* <form onSubmit={registerUser}>
                     <TextField
                         id="outlined-basic"
                         label="nome completo"
@@ -135,8 +63,8 @@ export function SignUp() {
                     </LoadingButton>
                 </form>
                 <Link href="/login" underline="hover" color="inherit">
-                    Já possui uma conta? Faça login
-                </Link>
+                    Jé tem uma conta? Faça login
+                </Link> */}
             </FormContainer>
         </StyledPage>
     );
@@ -189,6 +117,10 @@ const FormContainer = styled(Box)`
         .MuiTextField-root {
             margin-bottom: 10px;
         }
+    }
+
+    .MuiLink-root {
+        text-align: center;
     }
 
     .MuiLink-root:hover {
