@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { AxiosError } from "axios";
-import { Auth } from "../layouts/UnauthenticatedPages/Auth";
-import useLogin from "../hooks/api/useSignIn";
-import UserContext from "../contexts/UserContext";
+import { Auth } from "../../layouts/Auth";
+import useLogin from "../../hooks/api/useSignIn";
+import UserContext from "../../contexts/UserContext";
 
 export type LoginForm = {
     email: string;

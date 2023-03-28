@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import { ProtectedRouteGuard } from "./components/ProtectedRouteGuard";
 import { UserProvider } from "./contexts/UserContext";
-import { Home, SignIn, SignUp } from "./pages";
+import { Constructions, Home, SignIn, SignUp } from "./pages";
 
 export function App() {
     return (
@@ -27,9 +27,14 @@ export function App() {
                     <CssBaseline />
                     <ProtectedRouteGuard />
                     <Routes>
-                        <Route path="/" element={<Home />} />
                         <Route path="/cadastro" element={<SignUp />} />
                         <Route path="/login" element={<SignIn />} />
+                        <Route path="/" element={<Home />}>
+                            <Route
+                                path="/constructions"
+                                element={<Constructions />}
+                            />
+                        </Route>
                     </Routes>
                 </BrowserRouter>
             </UserProvider>

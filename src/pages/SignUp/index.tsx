@@ -1,11 +1,11 @@
 import { Link, TextField } from "@mui/material";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import useSignUp from "../hooks/api/useSignUp";
+import useSignUp from "../../hooks/api/useSignUp";
 import { LoadingButton } from "@mui/lab";
 import { AxiosError } from "axios";
-import { Auth } from "../layouts/UnauthenticatedPages/Auth";
+import { Auth } from "../../layouts/Auth";
 
 export type RegistrationForm = {
     name: string;
@@ -32,10 +32,10 @@ export function SignUp() {
         e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
     ) {
         const { name, value } = e.target;
-        setForm({ ...form, [name]: value });
+        setForm((prevForm) => ({ ...prevForm, [name]: value }));
     }
 
-    async function registerUser(e: FormEvent<HTMLFormElement>) {
+    const registerUser = useCallback(async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         try {
@@ -54,17 +54,17 @@ export function SignUp() {
 
             console.error(error.response);
         }
-    }
+    }, []);
 
-    function checkIfFormIsComplete() {
+    const checkIfFormIsComplete = useCallback(() => {
         let isFinished = true;
         for (const key in form) {
             if (form[key as keyof RegistrationForm].length === 0) {
                 isFinished = false;
             }
         }
-        setFormIsComplete(isFinished ? true : false);
-    }
+        setFormIsComplete(isFinished);
+    }, []);
 
     function checkIfPasswordsAreTheSame() {
         if (password === confirmPassword) return setPasswordsAreTheSame(true);
@@ -76,6 +76,12 @@ export function SignUp() {
         checkIfFormIsComplete();
         checkIfPasswordsAreTheSame();
     }, [form]);
+
+    if (formIsComplete) {
+        useEffect(() => {
+            setPasswordsAreTheSame(formIsComplete);
+        }, []);
+    }
 
     return (
         <Auth title="Cadastro">
