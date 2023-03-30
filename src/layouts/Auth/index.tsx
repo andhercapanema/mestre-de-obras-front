@@ -1,6 +1,6 @@
 import { Avatar, FormLabel } from "@mui/material";
 import logo from "../../assets/images/constructor-hat-helmet-protection-svgrepo-com.svg";
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 import { FormContainer, StyledPage } from "./style";
 
 export function Auth(props: PropsWithChildren & { title: string }) {

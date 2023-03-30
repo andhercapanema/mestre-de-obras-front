@@ -1,4 +1,4 @@
-import { LoginForm } from "../pages";
+import { type LoginForm } from "../pages";
 import api from "./api";
 
 export type LoginResponse = {

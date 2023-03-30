@@ -12,12 +12,10 @@ export default function useLocalStorage<T>(key: string, initialValue: T) {
         }
     });
 
-    const setValue = (value: Object | Function) => {
+    const setValue = (value: T) => {
         try {
-            const valueToStore =
-                value instanceof Function ? value(storedValue) : value;
-            setStoredValue(valueToStore);
-            window.localStorage.setItem(key, JSON.stringify(valueToStore));
+            setStoredValue(value);
+            window.localStorage.setItem(key, JSON.stringify(value));
         } catch (error) {
             /* eslint-disable-next-line no-console */
             console.log(error);
