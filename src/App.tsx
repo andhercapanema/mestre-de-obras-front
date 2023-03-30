@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import { ProtectedRouteGuard } from "./components/ProtectedRouteGuard";
-import { UserProvider } from "./contexts/UserContext";
+import { ContextsProvider } from "./contexts/ContextsProvider";
+import { Theme } from "./layouts/Theme";
 import { Constructions, Home, SignIn, SignUp } from "./pages";
 
 export function App() {
@@ -21,23 +22,25 @@ export function App() {
                 pauseOnHover
                 theme="light"
             />
-            <UserProvider>
+            <ContextsProvider>
                 <BrowserRouter>
                     <GlobalStyle />
                     <CssBaseline />
                     <ProtectedRouteGuard />
-                    <Routes>
-                        <Route path="/cadastro" element={<SignUp />} />
-                        <Route path="/login" element={<SignIn />} />
-                        <Route path="/" element={<Home />}>
-                            <Route
-                                path="/constructions"
-                                element={<Constructions />}
-                            />
-                        </Route>
-                    </Routes>
+                    <Theme>
+                        <Routes>
+                            <Route path="/cadastro" element={<SignUp />} />
+                            <Route path="/login" element={<SignIn />} />
+                            <Route path="/" element={<Home />}>
+                                <Route
+                                    path="/constructions"
+                                    element={<Constructions />}
+                                />
+                            </Route>
+                        </Routes>
+                    </Theme>
                 </BrowserRouter>
-            </UserProvider>
+            </ContextsProvider>
         </>
     );
 }

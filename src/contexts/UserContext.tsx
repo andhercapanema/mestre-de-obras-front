@@ -1,11 +1,11 @@
-import { createContext, PropsWithChildren } from "react";
+import { createContext, type PropsWithChildren } from "react";
 
 import useLocalStorage from "../hooks/useLocalStorage";
-import { LoginResponse } from "../services/authApi";
+import { type LoginResponse } from "../services/authApi";
 
 type UserContextType = {
     userData: LoginResponse | null;
-    setUserData: (value: Object | Function) => void;
+    setUserData: (value: LoginResponse | null) => void;
 };
 
 const defaultValue = {
@@ -16,7 +16,7 @@ const defaultValue = {
         },
         token: "",
     },
-    setUserData: (value: Object | Function) => {},
+    setUserData: () => {},
 };
 
 const UserContext = createContext<UserContextType>(defaultValue);

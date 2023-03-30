@@ -1,10 +1,10 @@
 import { Link, TextField } from "@mui/material";
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { type FormEvent, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useSignUp from "../../hooks/api/useSignUp";
 import { LoadingButton } from "@mui/lab";
-import { AxiosError } from "axios";
+import { type AxiosError } from "axios";
 import { Auth } from "../../layouts/Auth";
 
 export type RegistrationForm = {
@@ -35,26 +35,31 @@ export function SignUp() {
         setForm((prevForm) => ({ ...prevForm, [name]: value }));
     }
 
-    const registerUser = useCallback(async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const registerUser =
+        /* useCallback( */
+        async (e: FormEvent<HTMLFormElement>) => {
+            console.log("resgisterUser()");
+            e.preventDefault();
 
-        try {
-            await signUp({
-                name,
-                email,
-                password,
-            });
-            toast.success("Cadastro realizado com sucesso!");
-            navigate("/login");
-        } catch (err) {
-            const error = err as AxiosError;
+            try {
+                await signUp({
+                    name,
+                    email,
+                    password,
+                });
+                toast.success("Cadastro realizado com sucesso!");
+                navigate("/login");
+            } catch (err) {
+                const error = err as AxiosError;
 
-            if (error.response?.data)
-                toast.error(error.response.data as string);
+                if (error.response?.data)
+                    toast.error(error.response.data as string);
 
-            console.error(error.response);
-        }
-    }, []);
+                console.error(error.response);
+            }
+        }; /* ,
+        [signUp, name, email, password, navigate]
+    ); */
 
     const checkIfFormIsComplete = useCallback(() => {
         let isFinished = true;
@@ -64,24 +69,21 @@ export function SignUp() {
             }
         }
         setFormIsComplete(isFinished);
-    }, []);
+    }, [form]);
 
-    function checkIfPasswordsAreTheSame() {
-        if (password === confirmPassword) return setPasswordsAreTheSame(true);
+    const checkIfPasswordsAreTheSame = useCallback(() => {
+        if (password === confirmPassword) {
+            setPasswordsAreTheSame(true);
+            return;
+        }
 
         setPasswordsAreTheSame(false);
-    }
+    }, [password, confirmPassword]);
 
     useEffect(() => {
         checkIfFormIsComplete();
         checkIfPasswordsAreTheSame();
-    }, [form]);
-
-    if (formIsComplete) {
-        useEffect(() => {
-            setPasswordsAreTheSame(formIsComplete);
-        }, []);
-    }
+    }, [checkIfFormIsComplete, checkIfPasswordsAreTheSame]);
 
     return (
         <Auth title="Cadastro">

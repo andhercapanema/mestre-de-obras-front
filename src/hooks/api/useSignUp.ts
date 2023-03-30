@@ -1,6 +1,6 @@
 import {
-    RegistrationBody,
-    RegistrationResponse,
+    type RegistrationBody,
+    type RegistrationResponse,
     userApi,
 } from "../../services/userApi";
 import useAsync from "../useAsync";
@@ -10,10 +10,7 @@ export default function useSignUp() {
         loading: signUpLoading,
         error: signUpError,
         act: signUp,
-    } = useAsync<Promise<RegistrationResponse>, RegistrationBody>(
-        userApi.signUp,
-        false
-    );
+    } = useAsync<RegistrationBody, RegistrationResponse>(userApi.signUp, false);
 
     return {
         signUpLoading,

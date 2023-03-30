@@ -1,5 +1,5 @@
-import { LoginForm } from "../../pages";
-import { authApi, LoginResponse } from "../../services/authApi";
+import { type LoginForm } from "../../pages";
+import { authApi, type LoginResponse } from "../../services/authApi";
 import useAsync from "../useAsync";
 
 export default function useLogin() {
@@ -7,7 +7,7 @@ export default function useLogin() {
         loading: loginLoading,
         error: loginError,
         act: login,
-    } = useAsync<Promise<LoginResponse>, LoginForm>(authApi.signIn, false);
+    } = useAsync<LoginForm, LoginResponse>(authApi.signIn, false);
 
     return {
         loginLoading,

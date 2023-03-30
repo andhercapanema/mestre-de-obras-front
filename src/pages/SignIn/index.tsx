@@ -1,9 +1,15 @@
 import { Link, TextField } from "@mui/material";
-import { FormEvent, useContext, useEffect, useState } from "react";
+import {
+    type FormEvent,
+    useContext,
+    useEffect,
+    useState,
+    useCallback,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
-import { AxiosError } from "axios";
+import { type AxiosError } from "axios";
 import { Auth } from "../../layouts/Auth";
 import useLogin from "../../hooks/api/useSignIn";
 import UserContext from "../../contexts/UserContext";
@@ -50,19 +56,19 @@ export function SignIn() {
         }
     }
 
-    function checkIfFormIsComplete() {
+    const checkIfFormIsComplete = useCallback(() => {
         let isFinished = true;
         for (const key in form) {
             if (form[key as keyof LoginForm].length === 0) {
                 isFinished = false;
             }
         }
-        setFormIsComplete(isFinished ? true : false);
-    }
+        setFormIsComplete(isFinished);
+    }, [form]);
 
     useEffect(() => {
         checkIfFormIsComplete();
-    }, [form]);
+    }, [checkIfFormIsComplete]);
 
     return (
         <Auth title="Login">
