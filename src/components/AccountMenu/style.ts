@@ -1,26 +1,44 @@
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const StyledAccountMenuButton = styled(Button)`
-    display: flex;
-    justify-content: space-between;
+type ButtonProps = {
+    margin?: number;
+    backgroundColor?: string;
+};
 
-    margin: 0 15px 15px;
-    padding: 10px;
-    border-radius: 30px;
+export const StyledAccountMenuButton = styled(Button, {
+    shouldForwardProp: (prop) =>
+        prop !== "margin" && prop !== "backgroundColor" && prop !== "sx",
+})<ButtonProps>(({ theme, backgroundColor, margin }) => ({
+    display: "flex",
+    justifyContent: "space-between",
 
-    background-color: ${({ theme }) => theme.palette.background.paper};
+    margin: margin ?? "0 15px 15px",
+    padding: "10px",
+    borderRadius: backgroundColor ? "5px" : "30px",
 
-    text-transform: none;
+    backgroundColor: backgroundColor ?? theme.palette.background.paper,
+    boxShadow: backgroundColor ? "none" : "initial",
 
-    .MuiTypography-root {
-        font-size: 0.8125rem;
-        text-align: start;
-        width: 100%;
-        margin: 0 8px;
-    }
+    textTransform: "none",
 
-    .MuiSvgIcon-root {
-        color: ${({ theme }) => theme.palette.divider};
-    }
-`;
+    ":hover": {
+        backgroundColor,
+        boxShadow: backgroundColor ? "none" : "initial",
+
+        "& .MuiSvgIcon-root": {
+            color: backgroundColor && theme.palette.text.secondary,
+        },
+    },
+
+    "& .MuiTypography-root": {
+        fontSize: "0.8125rem",
+        textAlign: "start",
+        width: "100%",
+        margin: "0 8px",
+    },
+
+    "& .MuiSvgIcon-root": {
+        color: theme.palette.divider,
+    },
+}));

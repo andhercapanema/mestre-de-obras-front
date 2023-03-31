@@ -10,6 +10,7 @@ export const themeOptions: ThemeOptions & {
         text: {
             light: string;
             lighter: string;
+            lightest: string;
         };
         background: {
             dark: string;

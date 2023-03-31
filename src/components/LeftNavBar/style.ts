@@ -28,8 +28,8 @@ export const StyledLogo = styled(Avatar)`
 export const StyledTitle = styled(Typography)`
     font-weight: 500;
     margin-top: 5px;
-    margin-bottom: 40px;
-    color: ${themeOptions.palette.text.light};
+    margin-bottom: 15px;
+    color: ${themeOptions.palette.text.lightest};
 `;
 
 export const StyledList = styled(List)`

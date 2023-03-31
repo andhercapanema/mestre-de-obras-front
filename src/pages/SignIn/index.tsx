@@ -1,6 +1,7 @@
 import { Link, TextField } from "@mui/material";
 import {
     type FormEvent,
+    type ChangeEvent,
     useContext,
     useEffect,
     useState,
@@ -32,7 +33,7 @@ export function SignIn() {
     const { loginLoading, login } = useLogin();
 
     function handleForm(
-        e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+        e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
     ) {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });

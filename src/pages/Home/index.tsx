@@ -24,7 +24,7 @@ export function Home() {
             />
             <LeftNavBar drawerIsOpen={drawerIsOpen} />
             <Main drawerIsOpen={drawerIsOpen}>
-                <DrawerHeader />
+                <DrawerHeader id="back-to-top-anchor" />
                 <Outlet />
             </Main>
             {drawerIsOpen && (

@@ -9,9 +9,13 @@ import { type getUserResponse } from "../../services/userApi";
 export function AccountMenuButton({
     open,
     handleClick,
+    margin,
+    backgroundColor,
 }: {
     open: boolean;
     handleClick: (event: MouseEvent<HTMLElement>) => void;
+    margin?: number;
+    backgroundColor?: string;
 }) {
     const [user, setUser] = useState<getUserResponse>();
     const [firstName, setFirstName] = useState<string>();
@@ -36,6 +40,8 @@ export function AccountMenuButton({
         }
     }, [user, firstName, lastName]);
 
+    console.log({ backgroundColor });
+
     return (
         <StyledAccountMenuButton
             variant="contained"
@@ -43,6 +49,8 @@ export function AccountMenuButton({
             aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
+            backgroundColor={backgroundColor}
+            margin={margin}
         >
             {firstName && lastName && (
                 <>
