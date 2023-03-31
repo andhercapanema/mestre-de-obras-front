@@ -40,8 +40,6 @@ export function AccountMenuButton({
         }
     }, [user, firstName, lastName]);
 
-    console.log({ backgroundColor });
-
     return (
         <StyledAccountMenuButton
             variant="contained"
