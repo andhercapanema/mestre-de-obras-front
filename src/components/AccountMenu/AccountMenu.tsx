@@ -9,7 +9,13 @@ import Logout from "@mui/icons-material/Logout";
 import { useState, type MouseEvent } from "react";
 import { AccountMenuButton } from "./AccountMenuButton";
 
-export function AccountMenu() {
+export function AccountMenu({
+    margin,
+    backgroundColor,
+}: {
+    margin?: number;
+    backgroundColor?: string;
+}) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -23,7 +29,12 @@ export function AccountMenu() {
 
     return (
         <>
-            <AccountMenuButton open={open} handleClick={handleClick} />
+            <AccountMenuButton
+                open={open}
+                handleClick={handleClick}
+                margin={margin}
+                backgroundColor={backgroundColor}
+            />
             {/* TODO: MUDAR AS COISAS QUE DESCEM DO MENU */}
             <Menu
                 anchorEl={anchorEl}
