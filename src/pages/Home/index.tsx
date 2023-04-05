@@ -16,7 +16,7 @@ export function Home() {
     };
 
     return (
-        <MainPageBox sx={{ display: "flex" }}>
+        <MainPageBox>
             <Header
                 drawerIsOpen={drawerIsOpen}
                 handleDrawerOpen={handleDrawerOpen}

@@ -4,6 +4,7 @@ import {
     ThemeProvider,
     type ThemeOptions,
 } from "@mui/material/styles";
+import type {} from "@mui/x-date-pickers/themeAugmentation";
 
 export const themeOptions: ThemeOptions & {
     palette: {
@@ -14,7 +15,9 @@ export const themeOptions: ThemeOptions & {
         };
         background: {
             dark: string;
+            darker: string;
         };
+        darkDivider: string;
     };
 } = {
     palette: {
@@ -40,6 +43,16 @@ export const themeOptions: ThemeOptions & {
             darker: "#272c33",
         },
         divider: "#e9edf2",
+        darkDivider: "rgba(0,0,0,.1)",
+    },
+    components: {
+        MuiDatePicker: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: "red",
+                },
+            },
+        },
     },
 };
 

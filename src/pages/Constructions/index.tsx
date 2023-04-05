@@ -1,4 +1,4 @@
-import { Avatar, Box, Divider } from "@mui/material";
+import { Avatar, Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { type MouseEvent, useState } from "react";
@@ -6,10 +6,12 @@ import DomainAddIcon from "@mui/icons-material/DomainAdd";
 import { ConstructionMenuList } from "../../components/ConstructionsMenu/ConstructionMenuList";
 import {
     NewConstructionButton,
+    PageDivider,
     PageHeader,
     SelectConstructionButton,
 } from "./style";
 import { Outlet } from "react-router";
+import { Link } from "react-router-dom";
 
 export function Constructions() {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -61,30 +63,19 @@ export function Constructions() {
                         />
                     </Box>
                 </Box>
-                <NewConstructionButton
-                    variant="contained"
-                    endIcon={<DomainAddIcon />}
-                >
-                    Nova obra
-                </NewConstructionButton>
+                <Link to={"/obras/cadastro"}>
+                    <NewConstructionButton
+                        variant="contained"
+                        endIcon={<DomainAddIcon />}
+                    >
+                        Nova obra
+                    </NewConstructionButton>
+                </Link>
             </PageHeader>
-            <Divider />
-            <Typography paragraph>
-                Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-                ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-                elementum integer enim neque volutpat ac tincidunt. Ornare
-                suspendisse sed nisi lacus sed viverra tellus. Purus sit amet
-                volutpat consequat mauris. Elementum eu facilisis sed odio
-                morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-                tincidunt ornare massa eget egestas purus viverra accumsan in.
-                In hendrerit gravida rutrum quisque non tellus orci ac.
-                Pellentesque nec nam aliquam sem et tortor. Habitant morbi
-                tristique senectus et. Adipiscing elit duis tristique
-                sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-                eleifend. Commodo viverra maecenas accumsan lacus vel facilisis.
-                Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-            </Typography>
-            <Outlet />
+            <PageDivider />
+            <Box sx={{ my: "32px", px: "calc((100% - 1000px) / 2)" }}>
+                <Outlet />
+            </Box>
         </>
     );
 }
