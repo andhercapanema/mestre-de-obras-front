@@ -16,13 +16,11 @@ export const Main = styled("main", {
     drawerIsOpen?: boolean;
 }>(({ theme, drawerIsOpen }) => ({
     flexGrow: 1,
-    padding: theme.spacing(3),
     transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: `-${drawerWidth}px`,
-    maxWidth: 1000,
     ...(drawerIsOpen && {
         transition: theme.transitions.create("margin", {
             easing: theme.transitions.easing.easeOut,

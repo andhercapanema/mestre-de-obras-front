@@ -1,4 +1,4 @@
-import { Box, Button, styled } from "@mui/material";
+import { Box, Button, Divider, styled } from "@mui/material";
 import { themeOptions } from "../../layouts/Theme";
 
 export const PageHeader = styled(Box)`
@@ -7,7 +7,7 @@ export const PageHeader = styled(Box)`
     align-items: center;
     width: 100%;
     height: 140px;
-    padding: 32px 0;
+    padding: 32px calc((100% - 1000px) / 2);
 
     .MuiTypography-h2 {
         font-weight: 600;
@@ -61,4 +61,9 @@ export const SelectConstructionButton = styled(Button)`
 
 export const NewConstructionButton = styled(Button)`
     color: ${themeOptions.palette.text.lightest};
+`;
+
+export const PageDivider = styled(Divider)`
+    border-width: 2px;
+    /* width: 100%; */
 `;

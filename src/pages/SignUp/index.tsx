@@ -35,31 +35,26 @@ export function SignUp() {
         setForm((prevForm) => ({ ...prevForm, [name]: value }));
     }
 
-    const registerUser =
-        /* useCallback( */
-        async (e: FormEvent<HTMLFormElement>) => {
-            console.log("resgisterUser()");
-            e.preventDefault();
+    const registerUser = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
-            try {
-                await signUp({
-                    name,
-                    email,
-                    password,
-                });
-                toast.success("Cadastro realizado com sucesso!");
-                navigate("/login");
-            } catch (err) {
-                const error = err as AxiosError;
+        try {
+            await signUp({
+                name,
+                email,
+                password,
+            });
+            toast.success("Cadastro realizado com sucesso!");
+            navigate("/login");
+        } catch (err) {
+            const error = err as AxiosError;
 
-                if (error.response?.data)
-                    toast.error(error.response.data as string);
+            if (error.response?.data)
+                toast.error(error.response.data as string);
 
-                console.error(error.response);
-            }
-        }; /* ,
-        [signUp, name, email, password, navigate]
-    ); */
+            console.error(error.response);
+        }
+    };
 
     const checkIfFormIsComplete = useCallback(() => {
         let isFinished = true;
