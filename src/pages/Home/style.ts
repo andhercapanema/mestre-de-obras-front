@@ -3,6 +3,13 @@ import { styled } from "@mui/material/styles";
 
 export const drawerWidth = 255;
 
+export const MainPageBox = styled(Box)`
+    display: flex;
+    background-color: ${({ theme }) => theme.palette.background.default};
+    min-height: 100vh;
+    justify-content: center;
+`;
+
 export const Main = styled("main", {
     shouldForwardProp: (prop) => prop !== "drawerIsOpen",
 })<{
@@ -15,6 +22,7 @@ export const Main = styled("main", {
         duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: `-${drawerWidth}px`,
+    maxWidth: 1000,
     ...(drawerIsOpen && {
         transition: theme.transitions.create("margin", {
             easing: theme.transitions.easing.easeOut,

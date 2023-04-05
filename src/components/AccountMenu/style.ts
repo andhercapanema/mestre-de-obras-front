@@ -13,7 +13,7 @@ export const StyledAccountMenuButton = styled(Button, {
     display: "flex",
     justifyContent: "space-between",
 
-    margin: margin ?? "0 15px 15px",
+    margin: margin ?? "0 15px 18px",
     padding: "10px",
     borderRadius: backgroundColor ? "5px" : "30px",
 

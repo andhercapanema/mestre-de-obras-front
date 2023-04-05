@@ -1,9 +1,8 @@
-import Box from "@mui/material/Box";
 import { useState } from "react";
 import { Header } from "../../components/Header/Header";
 import { LeftNavBar } from "../../components/LeftNavBar/LeftNavBar";
 import { Outlet } from "react-router-dom";
-import { BackgroundOpenDrawer, DrawerHeader, Main } from "./style";
+import { BackgroundOpenDrawer, DrawerHeader, Main, MainPageBox } from "./style";
 
 export function Home() {
     const [drawerIsOpen, setDrawerIsOpen] = useState(false);
@@ -17,7 +16,7 @@ export function Home() {
     };
 
     return (
-        <Box sx={{ display: "flex" }}>
+        <MainPageBox sx={{ display: "flex" }}>
             <Header
                 drawerIsOpen={drawerIsOpen}
                 handleDrawerOpen={handleDrawerOpen}
@@ -32,6 +31,6 @@ export function Home() {
                     TESTE
                 </BackgroundOpenDrawer>
             )}
-        </Box>
+        </MainPageBox>
     );
 }
