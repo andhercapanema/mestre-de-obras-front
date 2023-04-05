@@ -33,9 +33,14 @@ export function App() {
                             <Route path="/login" element={<SignIn />} />
                             <Route path="/" element={<Home />}>
                                 <Route
-                                    path="/constructions"
+                                    path="/obras"
                                     element={<Constructions />}
-                                />
+                                >
+                                    <Route
+                                        path="/obras/cadastro"
+                                        element={<div>Teste</div>}
+                                    ></Route>
+                                </Route>
                             </Route>
                         </Routes>
                     </Theme>

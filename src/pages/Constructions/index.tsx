@@ -1,24 +1,74 @@
+import { Avatar, Box, Divider } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { type MouseEvent, useState } from "react";
+import DomainAddIcon from "@mui/icons-material/DomainAdd";
+import { ConstructionMenuList } from "../../components/ConstructionsMenu/ConstructionMenuList";
+import {
+    NewConstructionButton,
+    PageHeader,
+    SelectConstructionButton,
+} from "./style";
+import { Outlet } from "react-router";
 
 export function Constructions() {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event: MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     return (
         <>
-            <Typography paragraph>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Rhoncus dolor purus non enim praesent elementum facilisis leo
-                vel. Risus at ultrices mi tempus imperdiet. Semper risus in
-                hendrerit gravida rutrum quisque non tellus. Convallis convallis
-                tellus id interdum velit laoreet id donec ultrices. Odio morbi
-                quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-                adipiscing bibendum est ultricies integer quis. Cursus euismod
-                quis viverra nibh cras. Metus vulputate eu scelerisque felis
-                imperdiet proin fermentum leo. Mauris commodo quis imperdiet
-                massa tincidunt. Cras tincidunt lobortis feugiat vivamus at
-                augue. At augue eget arcu dictum varius duis at consectetur
-                lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-                sapien faucibus et molestie ac.
-            </Typography>
+            <PageHeader>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Box sx={{ mr: 3 }}>
+                        <Typography variant="h2" paragraph>
+                            Obras
+                        </Typography>
+                        {/* TODO: adicionar Breadcrumbs */}
+                    </Box>
+                    <Box>
+                        <SelectConstructionButton
+                            variant="contained"
+                            onClick={handleClick}
+                            aria-controls={open ? "account-menu" : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? "true" : undefined}
+                        >
+                            <Avatar variant="rounded">A</Avatar>
+                            <Box>
+                                <Typography variant="subtitle1">
+                                    Acapulco
+                                </Typography>
+                                <Typography variant="subtitle2">
+                                    Selecione a obra
+                                </Typography>
+                            </Box>
+                            <ArrowDropDownIcon />
+                        </SelectConstructionButton>
+                        <ConstructionMenuList
+                            anchorEl={anchorEl}
+                            open={open}
+                            handleClose={handleClose}
+                            mt={1}
+                            ml={0}
+                        />
+                    </Box>
+                </Box>
+                <NewConstructionButton
+                    variant="contained"
+                    endIcon={<DomainAddIcon />}
+                >
+                    Nova obra
+                </NewConstructionButton>
+            </PageHeader>
+            <Divider />
             <Typography paragraph>
                 Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
                 ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
@@ -34,6 +84,7 @@ export function Constructions() {
                 eleifend. Commodo viverra maecenas accumsan lacus vel facilisis.
                 Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
             </Typography>
+            <Outlet />
         </>
     );
 }

@@ -14,6 +14,7 @@ import {
 import { drawerWidth } from "../../pages/Home/style";
 import { AccountMenu } from "../AccountMenu/AccountMenu";
 import ApartmentIcon from "@mui/icons-material/Apartment";
+import { Link } from "react-router-dom";
 
 export function LeftNavBar({ drawerIsOpen }: { drawerIsOpen: boolean }) {
     return (
@@ -38,12 +39,14 @@ export function LeftNavBar({ drawerIsOpen }: { drawerIsOpen: boolean }) {
             <Divider />
             <StyledList>
                 <ListItem disablePadding>
-                    <ListItemButton href="/constructions">
-                        <ListItemIcon>
-                            <ApartmentIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Obras" />
-                    </ListItemButton>
+                    <Link to={"/obras"}>
+                        <ListItemButton /*  href="/obras" */>
+                            <ListItemIcon>
+                                <ApartmentIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Obras" />
+                        </ListItemButton>
+                    </Link>
                 </ListItem>
             </StyledList>
         </StyledDrawer>

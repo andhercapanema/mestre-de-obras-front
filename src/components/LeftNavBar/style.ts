@@ -6,6 +6,11 @@ import { themeOptions } from "../../layouts/Theme";
 export const StyledDrawer = styled(Drawer)`
     .MuiPaper-root {
         background-color: ${themeOptions.palette.background.dark};
+        border-right: none;
+    }
+
+    .MuiDivider-root {
+        border-color: ${themeOptions.palette.text.light};
     }
 `;
 
@@ -34,6 +39,11 @@ export const StyledTitle = styled(Typography)`
 
 export const StyledList = styled(List)`
     color: ${themeOptions.palette.text.light};
+
+    a {
+        color: inherit;
+        text-decoration: inherit;
+    }
 
     .MuiSvgIcon-root {
         color: ${themeOptions.palette.text.light};
