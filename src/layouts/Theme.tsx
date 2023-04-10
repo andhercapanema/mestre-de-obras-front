@@ -24,6 +24,7 @@ export const themeOptions: ThemeOptions & {
         mode: "light",
         primary: {
             main: "#00bcc2",
+            light: "#d2ecee",
         },
         secondary: {
             main: "#4aa2ee",

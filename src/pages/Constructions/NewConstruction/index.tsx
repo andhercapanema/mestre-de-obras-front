@@ -9,7 +9,7 @@ import {
     StyledNewConstruction,
 } from "./style";
 import { DateField } from "@mui/x-date-pickers";
-import usePostConstruction from "../../../hooks/api/usePostConstruction";
+import usePostConstruction from "../../../hooks/api/useConstructionPost";
 
 export type ConstructionForm = {
     name: string;
@@ -65,7 +65,6 @@ export function NewConstruction() {
     }, [form]);
 
     const registerConstruction = async (e: FormEvent<HTMLFormElement>) => {
-        console.log("registerConstruction()");
         e.preventDefault();
 
         try {
