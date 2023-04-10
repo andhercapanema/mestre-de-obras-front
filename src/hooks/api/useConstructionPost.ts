@@ -7,7 +7,7 @@ import {
 } from "../../services/constructionApi";
 import { type ConstructionForm } from "../../pages";
 
-export default function usePostConstruction() {
+export default function useConstructionPost() {
     const token = useToken();
 
     const {

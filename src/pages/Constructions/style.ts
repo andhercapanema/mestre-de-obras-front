@@ -64,6 +64,5 @@ export const NewConstructionButton = styled(Button)`
 `;
 
 export const PageDivider = styled(Divider)`
-    border-width: 2px;
-    /* width: 100%; */
+    border-width: 1px;
 `;

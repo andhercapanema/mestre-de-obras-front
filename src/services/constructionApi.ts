@@ -17,6 +17,28 @@ async function postConstruction(
     return response.data;
 }
 
+export type getConstructionsResponse = Array<
+    Omit<ConstructionForm, "initialDate" | "endDate"> & {
+        id: number;
+        initialDate: string;
+        endDate: string;
+        createdAt: string;
+        updatedAt: string;
+    }
+>;
+
+async function getConstructions(
+    token: string | undefined
+): Promise<getConstructionsResponse> {
+    const response = await api.get("/constructions", {
+        headers: {
+            Authorization: `Bearer ${token ?? ""}`,
+        },
+    });
+    return response.data;
+}
+
 export const constructionApi = {
     postConstruction,
+    getConstructions,
 };
