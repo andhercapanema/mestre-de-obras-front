@@ -1,27 +1,67 @@
 import { Avatar, Menu, MenuItem } from "@mui/material";
 import { SelectConstructionTypography } from "./style";
+import useConstructions from "../../hooks/api/useConstructions";
+import { useContext, useEffect, useState } from "react";
+import ConstructionContext from "../../contexts/ConstructionContext";
+import { useNavigate } from "react-router-dom";
+import {
+    type getConstructionsResponse,
+    type Construction,
+} from "../../services/constructionApi";
+import { Initials } from "../Initials";
 
 export function ConstructionMenuList({
     anchorEl,
+    setAnchorEl,
     open,
-    handleClose,
     mt,
     ml,
+    navigateOnClick,
 }: {
     anchorEl: HTMLElement | null;
+    setAnchorEl: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
     open: boolean;
-    handleClose: () => void;
     mt?: number;
     ml?: number;
+    navigateOnClick?: boolean;
 }) {
+    const { getConstructions } = useConstructions();
+    const [constructionsList, setConstructionsList] =
+        useState<getConstructionsResponse | null>(null);
+    const { construction, setConstruction } = useContext(ConstructionContext);
+    const navigate = useNavigate();
+
+    const handleClose = (construction: Construction | null) => {
+        setAnchorEl(null);
+        setConstruction(construction);
+        if (construction && navigateOnClick)
+            navigate(`/obras/${construction.id}`);
+    };
+
+    useEffect(() => {
+        getConstructions()
+            .then((res) => {
+                setConstructionsList(res);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [construction, getConstructions]);
+
+    if (!constructionsList) return <></>;
+
     return (
         <>
             <Menu
                 anchorEl={anchorEl}
                 id="account-menu"
                 open={open}
-                onClose={handleClose}
-                onClick={handleClose}
+                onClose={() => {
+                    setAnchorEl(null);
+                }}
+                onClick={() => {
+                    setAnchorEl(null);
+                }}
                 PaperProps={{
                     elevation: 0,
                     sx: {
@@ -61,12 +101,19 @@ export function ConstructionMenuList({
                 <SelectConstructionTypography variant="subtitle1">
                     Selecione a Obra
                 </SelectConstructionTypography>
-                <MenuItem onClick={handleClose}>
-                    <Avatar sx={{ fontSize: 16 }}>A</Avatar> Acapulco
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                    <Avatar sx={{ fontSize: 16 }}>TS</Avatar> Trilhas do Sabiá
-                </MenuItem>
+                {constructionsList.map((construction) => (
+                    <MenuItem
+                        onClick={() => {
+                            handleClose(construction);
+                        }}
+                        key={construction.id}
+                    >
+                        <Avatar sx={{ fontSize: 16 }}>
+                            <Initials name={construction.name} />
+                        </Avatar>{" "}
+                        {construction.name}
+                    </MenuItem>
+                ))}
             </Menu>
         </>
     );

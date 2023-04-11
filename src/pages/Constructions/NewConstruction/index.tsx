@@ -1,6 +1,12 @@
 import { Divider, TextField, Typography } from "@mui/material";
 import { type AxiosError } from "axios";
-import { type FormEvent, useCallback, useEffect, useState } from "react";
+import {
+    type FormEvent,
+    useCallback,
+    useEffect,
+    useState,
+    useContext,
+} from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import {
@@ -10,6 +16,7 @@ import {
 } from "./style";
 import { DateField } from "@mui/x-date-pickers";
 import usePostConstruction from "../../../hooks/api/useConstructionPost";
+import ConstructionContext from "../../../contexts/ConstructionContext";
 
 export type ConstructionForm = {
     name: string;
@@ -36,6 +43,7 @@ export function NewConstruction() {
     const navigate = useNavigate();
     const { postConstructionIsLoading, postConstruction } =
         usePostConstruction();
+    const { setConstruction } = useContext(ConstructionContext);
 
     function handleForm(
         e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -68,9 +76,10 @@ export function NewConstruction() {
         e.preventDefault();
 
         try {
-            const { constructionId } = await postConstruction(form);
+            const construction = await postConstruction(form);
             toast.success("Cadastro realizado com sucesso!");
-            navigate(`/obras/${constructionId}`);
+            setConstruction(construction);
+            navigate(`/obras/${construction.id}`);
         } catch (err) {
             const error = err as AxiosError;
 

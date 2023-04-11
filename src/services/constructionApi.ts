@@ -1,14 +1,18 @@
 import { type ConstructionForm } from "../pages";
 import api from "./api";
 
-export type PostConstructionResponse = {
-    constructionId: number;
+export type Construction = Omit<ConstructionForm, "initialDate" | "endDate"> & {
+    id: number;
+    initialDate: string;
+    endDate: string;
+    createdAt: string;
+    updatedAt: string;
 };
 
 async function postConstruction(
     token: string | undefined,
     body: ConstructionForm
-): Promise<PostConstructionResponse> {
+): Promise<Construction> {
     const response = await api.post("/constructions", body, {
         headers: {
             Authorization: `Bearer ${token ?? ""}`,
@@ -17,15 +21,7 @@ async function postConstruction(
     return response.data;
 }
 
-export type getConstructionsResponse = Array<
-    Omit<ConstructionForm, "initialDate" | "endDate"> & {
-        id: number;
-        initialDate: string;
-        endDate: string;
-        createdAt: string;
-        updatedAt: string;
-    }
->;
+export type getConstructionsResponse = Construction[];
 
 async function getConstructions(
     token: string | undefined
