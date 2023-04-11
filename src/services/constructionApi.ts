@@ -17,15 +17,15 @@ async function postConstruction(
     return response.data;
 }
 
-export type getConstructionsResponse = Array<
-    Omit<ConstructionForm, "initialDate" | "endDate"> & {
-        id: number;
-        initialDate: string;
-        endDate: string;
-        createdAt: string;
-        updatedAt: string;
-    }
->;
+export type Construction = Omit<ConstructionForm, "initialDate" | "endDate"> & {
+    id: number;
+    initialDate: string;
+    endDate: string;
+    createdAt: string;
+    updatedAt: string;
+};
+
+export type getConstructionsResponse = Construction[];
 
 async function getConstructions(
     token: string | undefined
