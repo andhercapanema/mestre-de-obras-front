@@ -18,7 +18,7 @@ export function ConstructionsList() {
     const navigate = useNavigate();
 
     const { constructions } = useConstructions();
-    const { construction, setConstruction } = useContext(ConstructionContext);
+    const { setConstruction } = useContext(ConstructionContext);
 
     function navigateTo(construction: Construction) {
         setConstruction(construction);
@@ -28,8 +28,6 @@ export function ConstructionsList() {
     useEffect(() => {
         setConstruction(null);
     }, [setConstruction]);
-
-    console.log("List: ", construction);
 
     if (!constructions) return <></>;
 

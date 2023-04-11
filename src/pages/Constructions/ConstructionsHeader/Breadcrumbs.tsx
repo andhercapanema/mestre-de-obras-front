@@ -18,7 +18,7 @@ export function ConstructionsBreadcrumbs() {
             Obras
         </Link>,
         <Typography key="2" color="text.primary">
-            {construction?.name}
+            {construction ? construction?.name : "Cadastro"}
         </Typography>,
     ];
 

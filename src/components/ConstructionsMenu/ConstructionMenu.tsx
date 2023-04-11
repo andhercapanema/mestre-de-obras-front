@@ -10,9 +10,6 @@ export function ConstructionMenu() {
     const handleClick = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
     return (
         <>
@@ -38,8 +35,8 @@ export function ConstructionMenu() {
             </SelectConstructionBox>
             <ConstructionMenuList
                 anchorEl={anchorEl}
+                setAnchorEl={setAnchorEl}
                 open={open}
-                handleClose={handleClose}
             />
         </>
     );

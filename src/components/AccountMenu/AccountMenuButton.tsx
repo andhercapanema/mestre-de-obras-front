@@ -5,6 +5,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import useUser from "../../hooks/api/useUser";
 import { useEffect, useState, type MouseEvent } from "react";
 import { type getUserResponse } from "../../services/userApi";
+import { Initials } from "../Initials";
 
 export function AccountMenuButton({
     open,
@@ -18,9 +19,13 @@ export function AccountMenuButton({
     backgroundColor?: string;
 }) {
     const [user, setUser] = useState<getUserResponse>();
-    const [firstName, setFirstName] = useState<string>();
-    const [lastName, setLastName] = useState<string>();
     const { getUser } = useUser();
+
+    const nameArr = user?.name.split(" ") ?? ["Erro", "Usuário"];
+    const firstAndLastName =
+        nameArr.length === 1
+            ? nameArr[0]
+            : `${nameArr[0]} ${nameArr[nameArr.length - 1]}`;
 
     useEffect(() => {
         getUser()
@@ -32,13 +37,7 @@ export function AccountMenuButton({
             });
     }, [getUser]);
 
-    useEffect(() => {
-        if (user) {
-            const arrOfNames = user.name.split(" ");
-            setFirstName(arrOfNames[0]);
-            setLastName(arrOfNames[arrOfNames.length - 1]);
-        }
-    }, [user, firstName, lastName]);
+    if (!user) return <></>;
 
     return (
         <StyledAccountMenuButton
@@ -50,16 +49,10 @@ export function AccountMenuButton({
             backgroundColor={backgroundColor}
             margin={margin}
         >
-            {firstName && lastName && (
-                <>
-                    <Avatar sx={{ width: 32, height: 32, fontSize: 16 }}>
-                        {firstName[0] + lastName[0]}
-                    </Avatar>
-                    <Typography variant="body1">
-                        {`${firstName} ${lastName}`}
-                    </Typography>
-                </>
-            )}
+            <Avatar sx={{ width: 32, height: 32, fontSize: 16 }}>
+                {user && <Initials name={user.name} />}
+            </Avatar>
+            <Typography variant="body1">{firstAndLastName}</Typography>
             <ExpandMoreIcon />
         </StyledAccountMenuButton>
     );

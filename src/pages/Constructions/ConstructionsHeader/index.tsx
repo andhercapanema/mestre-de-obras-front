@@ -8,7 +8,7 @@ import {
     PageHeader,
     SelectConstructionButton,
 } from "./style";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ConstructionMenuList } from "../../../components/ConstructionsMenu/ConstructionMenuList";
 import { ConstructionsBreadcrumbs } from "./Breadcrumbs";
 import ConstructionContext from "../../../contexts/ConstructionContext";
@@ -16,15 +16,25 @@ import ConstructionContext from "../../../contexts/ConstructionContext";
 export function ConstructionsHeader() {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const { construction } = useContext(ConstructionContext);
 
     const handleClick = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    const { construction } = useContext(ConstructionContext);
+    const { pathname } = useLocation();
+
+    const displayedName = construction
+        ? construction.name
+        : "Nenhuma selecionada";
+
+    const displayedNameArr = displayedName.split(" ");
+
+    const firstLetters =
+        displayedNameArr.length === 1
+            ? displayedNameArr[0][0]
+            : displayedNameArr[0][0] +
+              displayedNameArr[displayedNameArr.length - 1][0];
 
     return (
         <>
@@ -34,7 +44,9 @@ export function ConstructionsHeader() {
                         <Typography variant="h2" paragraph>
                             Obras
                         </Typography>
-                        {construction && <ConstructionsBreadcrumbs />}
+                        {(construction ?? pathname === "/obras/cadastro") && (
+                            <ConstructionsBreadcrumbs />
+                        )}
                     </Box>
                     <Box>
                         <SelectConstructionButton
@@ -44,11 +56,12 @@ export function ConstructionsHeader() {
                             aria-haspopup="true"
                             aria-expanded={open ? "true" : undefined}
                         >
-                            <Avatar variant="rounded">A</Avatar>
+                            <Avatar variant="rounded">{firstLetters}</Avatar>
                             <Box>
                                 <Typography variant="subtitle1">
-                                    Acapulco
+                                    {displayedName}
                                 </Typography>
+
                                 <Typography variant="subtitle2">
                                     Selecione a obra
                                 </Typography>
@@ -57,10 +70,11 @@ export function ConstructionsHeader() {
                         </SelectConstructionButton>
                         <ConstructionMenuList
                             anchorEl={anchorEl}
+                            setAnchorEl={setAnchorEl}
                             open={open}
-                            handleClose={handleClose}
                             mt={1}
                             ml={0}
+                            navigateOnClick={true}
                         />
                     </Box>
                 </Box>
