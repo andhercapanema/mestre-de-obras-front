@@ -5,6 +5,7 @@ import {
     type ThemeOptions,
 } from "@mui/material/styles";
 import type {} from "@mui/x-date-pickers/themeAugmentation";
+import { ptBR } from "@mui/x-date-pickers";
 
 export const themeOptions: ThemeOptions & {
     palette: {
@@ -45,6 +46,10 @@ export const themeOptions: ThemeOptions & {
         },
         divider: "#e9edf2",
         darkDivider: "rgba(0,0,0,.1)",
+        error: {
+            main: "#d32f2f",
+            light: "rgba(194, 0, 0, 0.04)",
+        },
     },
     components: {
         MuiDatePicker: {
@@ -57,7 +62,7 @@ export const themeOptions: ThemeOptions & {
     },
 };
 
-const theme = createTheme(themeOptions);
+const theme = createTheme(themeOptions, ptBR);
 
 export function Theme({ children }: PropsWithChildren) {
     return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
