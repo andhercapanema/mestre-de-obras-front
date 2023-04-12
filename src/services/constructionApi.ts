@@ -34,7 +34,34 @@ async function getConstructions(
     return response.data;
 }
 
+async function getConstructionById(
+    token: string | undefined,
+    id: number
+): Promise<Construction> {
+    const response = await api.get(`/constructions/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token ?? ""}`,
+        },
+    });
+    return response.data;
+}
+
+async function patchConstruction(
+    token: string | undefined,
+    body: ConstructionForm,
+    id: number
+): Promise<Construction> {
+    const response = await api.patch(`/constructions/${id}`, body, {
+        headers: {
+            Authorization: `Bearer ${token ?? ""}`,
+        },
+    });
+    return response.data;
+}
+
 export const constructionApi = {
     postConstruction,
     getConstructions,
+    getConstructionById,
+    patchConstruction,
 };
