@@ -40,14 +40,19 @@ export const FormContainer = styled(Box)`
         width: 100%;
         margin-bottom: 10px;
 
+        .MuiTextField-root {
+            margin-bottom: 10px;
+        }
+
         .MuiFormLabel-root {
             font-size: 1rem;
             font-weight: 400;
             color: inherit;
+            top: -2.5px;
         }
 
-        .MuiTextField-root {
-            margin-bottom: 10px;
+        .MuiInputBase-root {
+            height: 48px;
         }
     }
 

@@ -129,6 +129,10 @@ export function ConstructionDetail() {
 
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
 
+    useEffect(() => {
+        setIsEditing(false);
+    }, [id]);
+
     if (!construction)
         return (
             <Box
