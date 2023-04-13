@@ -30,6 +30,7 @@ import { type ConstructionForm } from "../NewConstruction";
 import useConstructionPatch from "../../../hooks/api/useConstructionPatch";
 import { toast } from "react-toastify";
 import { type AxiosError } from "axios";
+import { DeleteDialog } from "./DeleteDialog";
 
 export function ConstructionDetail() {
     const { construction, setConstruction } = useContext(ConstructionContext);
@@ -126,6 +127,8 @@ export function ConstructionDetail() {
         }
     }
 
+    const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
+
     if (!construction)
         return (
             <Box
@@ -174,7 +177,18 @@ export function ConstructionDetail() {
                             >
                                 Editar
                             </Button>
-                            <Button>Deletar</Button>
+                            <Button
+                                onClick={() => {
+                                    setDeleteDialogIsOpen(true);
+                                }}
+                            >
+                                Deletar
+                            </Button>
+                            <DeleteDialog
+                                deleteDialogIsOpen={deleteDialogIsOpen}
+                                setDeleteDialogIsOpen={setDeleteDialogIsOpen}
+                                id={Number(id)}
+                            />
                         </>
                     )}
                 </StyledButtonGroup>

@@ -47,7 +47,8 @@ export const themeOptions: ThemeOptions & {
         divider: "#e9edf2",
         darkDivider: "rgba(0,0,0,.1)",
         error: {
-            main: "#d32f2f",
+            dark: "rgb(147, 32, 32)",
+            main: "#9e1818",
             light: "rgba(194, 0, 0, 0.04)",
         },
     },

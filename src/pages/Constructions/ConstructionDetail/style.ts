@@ -1,4 +1,4 @@
-import { Box, ButtonGroup, Typography, styled } from "@mui/material";
+import { Box, ButtonGroup, Dialog, Typography, styled } from "@mui/material";
 
 export const PageTitle = styled(Typography)`
     font-weight: 600;
@@ -44,5 +44,17 @@ export const BackgroundBox = styled(Box)`
 
     .MuiFormControl-root {
         width: 100%;
+    }
+`;
+
+export const StyledDialog = styled(Dialog)`
+    .MuiButtonBase-root:nth-of-type(2) {
+        border-color: ${({ theme }) => theme.palette.error.main};
+        color: ${({ theme }) => theme.palette.error.dark};
+    }
+
+    .MuiButtonBase-root:nth-of-type(2):hover {
+        border-color: ${({ theme }) => theme.palette.error.dark};
+        background-color: ${({ theme }) => theme.palette.error.light};
     }
 `;

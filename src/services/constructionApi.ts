@@ -59,9 +59,22 @@ async function patchConstruction(
     return response.data;
 }
 
+async function deleteConstructionById(
+    token: string | undefined,
+    id: number
+): Promise<Construction> {
+    const response = await api.delete(`/constructions/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token ?? ""}`,
+        },
+    });
+    return response.data;
+}
+
 export const constructionApi = {
     postConstruction,
     getConstructions,
     getConstructionById,
     patchConstruction,
+    deleteConstructionById,
 };
