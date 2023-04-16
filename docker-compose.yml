@@ -1,0 +1,28 @@
+services:
+    react:
+        container_name: react
+        build: .
+        image: mestre-de-obras/frontend
+        volumes:
+            - react-volume:/var/www/html
+
+    nginx:
+        container_name: nginx
+        build: ./nginx
+        image: mestre-de-obras/nginx
+        networks:
+            - mestre-de-obras-network
+        ports:
+            - 80:80
+        volumes:
+            - react-volume:/var/www/html
+        depends_on:
+            - react
+
+networks:
+    mestre-de-obras-network:
+        name: mestre-de-obras-network
+        external: true
+
+volumes:
+    react-volume:
