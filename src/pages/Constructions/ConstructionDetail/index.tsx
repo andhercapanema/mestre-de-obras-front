@@ -38,17 +38,22 @@ export function ConstructionDetail() {
     const { getConstruction } = useConstruction();
     const [error, setError] = useState("");
 
+    const fetchConstruction = useCallback(async () => {
+        getConstruction(Number(id))
+            .then((res) => {
+                setConstruction(res);
+                console.log("res: ", res);
+            })
+            .catch((err) => {
+                setError(err.response.data);
+            });
+    }, [id, getConstruction, setConstruction]);
+
     useEffect(() => {
         if (!construction) {
-            getConstruction(Number(id))
-                .then((res) => {
-                    setConstruction(res);
-                })
-                .catch((err) => {
-                    setError(err.response.data);
-                });
+            void fetchConstruction();
         }
-    }, [construction, getConstruction, id, setConstruction]);
+    }, [construction, fetchConstruction]);
 
     const populateForm = useCallback(() => {
         if (construction) {
@@ -131,7 +136,8 @@ export function ConstructionDetail() {
 
     useEffect(() => {
         setIsEditing(false);
-    }, [id]);
+        void fetchConstruction();
+    }, [id, fetchConstruction]);
 
     if (!construction)
         return (
@@ -146,8 +152,6 @@ export function ConstructionDetail() {
                 <Typography>{error}</Typography>
             </Box>
         );
-
-    console.log(form);
 
     return (
         <form onSubmit={updateConstruction}>
