@@ -1,17 +1,22 @@
 import Typography from "@mui/material/Typography";
-import { useContext, type MouseEvent } from "react";
-import { Link } from "react-router-dom";
+import { useContext, type MouseEvent, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { StyledBreadcrumbs } from "./style";
 import ConstructionContext from "../../../contexts/ConstructionContext";
 
 export function ConstructionsBreadcrumbs() {
-    const { construction } = useContext(ConstructionContext);
+    const { construction, setConstruction } = useContext(ConstructionContext);
+    const { pathname } = useLocation();
 
     function handleClick(
         event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
     ) {
         event.preventDefault();
     }
+
+    useEffect(() => {
+        if (pathname === "/obras/cadastro") setConstruction(null);
+    }, [pathname, setConstruction]);
 
     const breadcrumbs = [
         <Link key="1" color="inherit" to="/obras" onClick={() => handleClick}>
