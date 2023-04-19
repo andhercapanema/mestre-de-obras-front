@@ -5,9 +5,8 @@ import { SearchInput } from "../SearchInput/SearchInput";
 import { ScrollTop } from "../ScrollTop/ScrollTop";
 import Fab from "@mui/material/Fab";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { Box, Divider, useTheme } from "@mui/material";
-import { AccountMenu } from "../AccountMenu/AccountMenu";
-import { ConstructionMenu } from "../ConstructionsMenu/ConstructionMenu";
+import { Box } from "@mui/material";
+import { HeaderMenus } from "./HeaderMenus";
 
 export function Header({
     drawerIsOpen,
@@ -16,8 +15,6 @@ export function Header({
     drawerIsOpen: boolean;
     handleDrawerOpen: () => void;
 }) {
-    const theme = useTheme();
-
     return (
         <>
             <AppBar position="fixed" drawerIsOpen={drawerIsOpen}>
@@ -37,14 +34,7 @@ export function Header({
                         </IconButton>
                         <SearchInput />
                     </Box>
-                    <Box sx={{ display: "flex" }}>
-                        <AccountMenu
-                            margin={0}
-                            backgroundColor={theme.palette.background.paper}
-                        />
-                        <Divider orientation="vertical" flexItem />
-                        <ConstructionMenu />
-                    </Box>
+                    <HeaderMenus />
                 </StyledToolbar>
             </AppBar>
             <ScrollTop>
