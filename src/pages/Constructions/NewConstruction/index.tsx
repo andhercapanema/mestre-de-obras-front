@@ -167,7 +167,7 @@ export function NewConstruction() {
                     disabled={!formIsComplete}
                     loading={postConstructionIsLoading}
                 >
-                    Criar conta
+                    Criar obra
                 </StyledLoadingButton>
             </form>
         </StyledNewConstruction>

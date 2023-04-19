@@ -69,6 +69,7 @@ export function ConstructionMenuList({
                         filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                         mt: mt ?? 3,
                         ml: ml ?? 1,
+                        minWidth: "230px",
                         "& .MuiAvatar-root": {
                             width: 32,
                             height: 32,

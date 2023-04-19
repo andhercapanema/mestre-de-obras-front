@@ -1,40 +1,35 @@
-import { Avatar, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { type MouseEvent, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import DomainAddIcon from "@mui/icons-material/DomainAdd";
-import {
-    NewConstructionButton,
-    PageHeader,
-    SelectConstructionButton,
-} from "./style";
+import { NewConstructionButton, PageHeader } from "./style";
 import { Link, useLocation } from "react-router-dom";
-import { ConstructionMenuList } from "../../../components/ConstructionsMenu/ConstructionMenuList";
 import { ConstructionsBreadcrumbs } from "./Breadcrumbs";
 import ConstructionContext from "../../../contexts/ConstructionContext";
+import { ConstructionsHeaderMenu } from "./ConstructionsHeaderMenu";
+import useConstructions from "../../../hooks/api/useConstructions";
 
 export function ConstructionsHeader() {
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-
-    const handleClick = (event: MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
     const { construction } = useContext(ConstructionContext);
     const { pathname } = useLocation();
 
-    const displayedName = construction
-        ? construction.name
-        : "Nenhuma selecionada";
+    const { getConstructions } = useConstructions();
+    const [thereIsMoreThanOneConstruction, setThereIsMoreThanOneConstruction] =
+        useState(false);
 
-    const displayedNameArr = displayedName.split(" ");
-
-    const firstLetters =
-        displayedNameArr.length === 1
-            ? displayedNameArr[0][0]
-            : displayedNameArr[0][0] +
-              displayedNameArr[displayedNameArr.length - 1][0];
+    useEffect(() => {
+        getConstructions()
+            .then((res) => {
+                if (res.length > 1) {
+                    setThereIsMoreThanOneConstruction(true);
+                } else {
+                    setThereIsMoreThanOneConstruction(false);
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [construction, getConstructions]);
 
     return (
         <>
@@ -48,35 +43,9 @@ export function ConstructionsHeader() {
                             <ConstructionsBreadcrumbs />
                         )}
                     </Box>
-                    <Box>
-                        <SelectConstructionButton
-                            variant="contained"
-                            onClick={handleClick}
-                            aria-controls={open ? "account-menu" : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open ? "true" : undefined}
-                        >
-                            <Avatar variant="rounded">{firstLetters}</Avatar>
-                            <Box>
-                                <Typography variant="subtitle1">
-                                    {displayedName}
-                                </Typography>
-
-                                <Typography variant="subtitle2">
-                                    Selecione a obra
-                                </Typography>
-                            </Box>
-                            <ArrowDropDownIcon />
-                        </SelectConstructionButton>
-                        <ConstructionMenuList
-                            anchorEl={anchorEl}
-                            setAnchorEl={setAnchorEl}
-                            open={open}
-                            mt={1}
-                            ml={0}
-                            navigateOnClick={true}
-                        />
-                    </Box>
+                    {thereIsMoreThanOneConstruction && (
+                        <ConstructionsHeaderMenu />
+                    )}
                 </Box>
                 <Link to={"/obras/cadastro"}>
                     <NewConstructionButton
