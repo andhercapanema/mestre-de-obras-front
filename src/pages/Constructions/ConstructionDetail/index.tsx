@@ -42,7 +42,6 @@ export function ConstructionDetail() {
         getConstruction(Number(id))
             .then((res) => {
                 setConstruction(res);
-                console.log("res: ", res);
             })
             .catch((err) => {
                 setError(err.response.data);

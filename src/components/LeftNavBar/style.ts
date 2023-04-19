@@ -1,6 +1,6 @@
 import { styled } from "@mui/material/styles";
 import Drawer from "@mui/material/Drawer";
-import { Avatar, List, Typography } from "@mui/material";
+import { Avatar, List, ListItemButton, Typography } from "@mui/material";
 import { themeOptions } from "../../layouts/Theme";
 
 export const StyledDrawer = styled(Drawer)`
@@ -43,19 +43,32 @@ export const StyledList = styled(List)`
     a {
         color: inherit;
         text-decoration: inherit;
-    }
-
-    .MuiSvgIcon-root {
-        color: ${themeOptions.palette.text.light};
-    }
-
-    .MuiListItem-root {
-        &:hover {
-            color: ${themeOptions.palette.text.lighter};
-
-            .MuiSvgIcon-root {
-                color: ${themeOptions.palette.text.lighter};
-            }
-        }
+        width: 100%;
     }
 `;
+
+type ListItemButtonProps = {
+    isSelected: boolean;
+};
+
+export const StyledListItemButton = styled(ListItemButton, {
+    shouldForwardProp: (prop) => prop !== "isSelected" && prop !== "sx",
+})<ListItemButtonProps>(({ isSelected }) => ({
+    color: isSelected
+        ? themeOptions.palette.text.lightest
+        : themeOptions.palette.text.light,
+
+    ":hover": {
+        color: themeOptions.palette.text.lightest,
+
+        "& .MuiListItemIcon-root": {
+            color: themeOptions.palette.text.lightest,
+        },
+    },
+
+    "& .MuiListItemIcon-root": {
+        color: isSelected
+            ? themeOptions.palette.text.lightest
+            : themeOptions.palette.text.light,
+    },
+}));
