@@ -67,7 +67,12 @@ export function SearchInput() {
     }, [pathname, getConstructions]);
 
     return (
-        <>
+        <ClickAwayListener
+            onClickAway={() => {
+                setMenuIsOpen(false);
+                setQuery("");
+            }}
+        >
             <SearchForm onSubmit={search}>
                 <TextField
                     required
@@ -82,69 +87,61 @@ export function SearchInput() {
                 {menuIsOpen && filteredItens && (
                     <>
                         <Box />
-                        <ClickAwayListener
-                            onClickAway={() => {
-                                setMenuIsOpen(false);
-                                setQuery("");
-                            }}
-                        >
-                            <List role="presentation">
-                                {filteredItens.length > 0 ? (
-                                    filteredItens.map((item) => (
-                                        <ListItem
-                                            key={item.id}
-                                            onClick={() => {
-                                                setMenuIsOpen(false);
-                                            }}
-                                        >
-                                            <ListItemButton
-                                                onClick={() => {
-                                                    navigateToItemPage(
-                                                        item.id,
-                                                        item.type
-                                                    );
-                                                }}
-                                                disabled={item.type === "erro"}
-                                            >
-                                                <ListItemIcon>
-                                                    <ApartmentIcon />
-                                                </ListItemIcon>
-                                                <ListItemText
-                                                    primary={item.name}
-                                                />
-                                            </ListItemButton>
-                                        </ListItem>
-                                    ))
-                                ) : (
+
+                        <List role="presentation">
+                            {filteredItens.length > 0 ? (
+                                filteredItens.map((item) => (
                                     <ListItem
+                                        key={item.id}
                                         onClick={() => {
                                             setMenuIsOpen(false);
-                                            setQuery("");
-                                        }}
-                                        sx={{
-                                            display: "flex",
-                                            justifyContent: "center",
                                         }}
                                     >
                                         <ListItemButton
-                                            disabled
-                                            sx={{
-                                                padding: "6px 45px !important",
+                                            onClick={() => {
+                                                navigateToItemPage(
+                                                    item.id,
+                                                    item.type
+                                                );
                                             }}
+                                            disabled={item.type === "erro"}
                                         >
-                                            <SearchOffIcon />
-                                            <ListItemText
-                                                primary="Nenhum elemento correspondente encontrado!"
-                                                sx={{ textAlign: "center" }}
-                                            />
+                                            <ListItemIcon>
+                                                <ApartmentIcon />
+                                            </ListItemIcon>
+                                            <ListItemText primary={item.name} />
                                         </ListItemButton>
                                     </ListItem>
-                                )}
-                            </List>
-                        </ClickAwayListener>
+                                ))
+                            ) : (
+                                <ListItem
+                                    onClick={() => {
+                                        setMenuIsOpen(false);
+                                        setQuery("");
+                                    }}
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                    }}
+                                >
+                                    <ListItemButton
+                                        disabled
+                                        sx={{
+                                            padding: "6px 45px !important",
+                                        }}
+                                    >
+                                        <SearchOffIcon />
+                                        <ListItemText
+                                            primary="Nenhum elemento correspondente encontrado!"
+                                            sx={{ textAlign: "center" }}
+                                        />
+                                    </ListItemButton>
+                                </ListItem>
+                            )}
+                        </List>
                     </>
                 )}
             </SearchForm>
-        </>
+        </ClickAwayListener>
     );
 }
