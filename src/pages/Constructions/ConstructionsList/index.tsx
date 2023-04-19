@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import ConstructionContext from "../../../contexts/ConstructionContext";
 import { type Construction } from "../../../services/constructionApi";
+import { PageWarning } from "../../../components/PageWarning/PageWarning";
 
 export function ConstructionsList() {
     const navigate = useNavigate();
@@ -30,6 +31,9 @@ export function ConstructionsList() {
     }, [setConstruction]);
 
     if (!constructions) return <></>;
+
+    if (constructions.length === 0)
+        return <PageWarning warning="Cadastre já uma nova obra!" />;
 
     return (
         <TableContainer component={Paper}>

@@ -14,7 +14,6 @@ import {
     ListItem,
     ListItemIcon,
     ListItemText,
-    Typography,
 } from "@mui/material";
 import { BackgroundBox, PageTitle, StyledButtonGroup } from "./style";
 import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
@@ -31,6 +30,7 @@ import useConstructionPatch from "../../../hooks/api/useConstructionPatch";
 import { toast } from "react-toastify";
 import { type AxiosError } from "axios";
 import { DeleteDialog } from "./DeleteDialog";
+import { PageWarning } from "../../../components/PageWarning/PageWarning";
 
 export function ConstructionDetail() {
     const { construction, setConstruction } = useContext(ConstructionContext);
@@ -139,19 +139,7 @@ export function ConstructionDetail() {
         void fetchConstruction();
     }, [id, fetchConstruction]);
 
-    if (!construction)
-        return (
-            <Box
-                sx={{
-                    height: 1,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            >
-                <Typography>{error}</Typography>
-            </Box>
-        );
+    if (!construction) return <PageWarning warning={error} />;
 
     return (
         <form onSubmit={updateConstruction}>
