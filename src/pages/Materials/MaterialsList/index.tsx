@@ -50,16 +50,22 @@ export function MaterialsList() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {materials.map((material) => (
-                            <TableRow key={material.id}>
-                                <TableCell component="th" scope="row">
-                                    {material.name}
-                                </TableCell>
-                                <TableCell align="center">
-                                    {material.unit}
-                                </TableCell>
-                            </TableRow>
-                        ))}
+                        {materials
+                            .sort((a, b) =>
+                                a.name.localeCompare(b.name, "pt", {
+                                    sensitivity: "base",
+                                })
+                            )
+                            .map((material) => (
+                                <TableRow key={material.id}>
+                                    <TableCell component="th" scope="row">
+                                        {material.name}
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        {material.unit}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
                     </TableBody>
                 </StyledTable>
             </TableContainer>

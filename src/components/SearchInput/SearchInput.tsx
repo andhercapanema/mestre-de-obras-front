@@ -1,5 +1,4 @@
 import {
-    IconButton,
     List,
     ListItem,
     ListItemButton,
@@ -7,31 +6,52 @@ import {
     ListItemText,
     TextField,
 } from "@mui/material";
-import { SearchForm } from "./style";
+import { SearchForm, SvgBox, WhiteBackgroundBox } from "./style";
 import SearchIcon from "@mui/icons-material/Search";
-import { type ChangeEvent, useState, type FormEvent, useEffect } from "react";
+import { type ChangeEvent, useState, useEffect } from "react";
 import useConstructions from "../../hooks/api/useConstructions";
-import { Box } from "@mui/system";
 import { type Construction } from "../../services/constructionApi";
 import { useLocation, useNavigate } from "react-router";
 import { ClickAwayListener } from "@mui/base";
 import ApartmentIcon from "@mui/icons-material/Apartment";
+import WidgetsIcon from "@mui/icons-material/Widgets";
 import SearchOffIcon from "@mui/icons-material/SearchOff";
+import useMaterials from "../../hooks/api/useMaterials";
+import { type Material } from "../../services/materialApi";
 
 export function SearchInput() {
     const [query, setQuery] = useState("");
     const [menuIsOpen, setMenuIsOpen] = useState(false);
     const { getConstructions } = useConstructions();
     const [constructions, setConstructions] = useState<Construction[]>();
+    const { getMaterials } = useMaterials();
+    const [materials, setMaterials] = useState<Material[]>();
     const { pathname } = useLocation();
     const navigate = useNavigate();
 
-    const filteredItens = constructions
+    const filteredConstructions = constructions
         ?.filter(({ name }) => name.toLowerCase().includes(query.toLowerCase()))
         .sort((a, b) =>
             a.name.localeCompare(b.name, "pt", { sensitivity: "base" })
         )
         .map((construction) => ({ ...construction, type: "obras" }));
+
+    const filteredMaterials = materials
+        ?.filter(({ name }) => name.toLowerCase().includes(query.toLowerCase()))
+        .sort((a, b) =>
+            a.name.localeCompare(b.name, "pt", { sensitivity: "base" })
+        )
+        .map((material) => ({ ...material, type: "insumos" }));
+
+    const filteredItens =
+        filteredConstructions && filteredMaterials
+            ? [...filteredConstructions, ...filteredMaterials]
+            : [];
+
+    const itemTypeHandler: Record<string, JSX.Element> = {
+        obras: <ApartmentIcon />,
+        insumos: <WidgetsIcon />,
+    };
 
     function handleInput(
         e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -45,15 +65,14 @@ export function SearchInput() {
         }
     }
 
-    function search(e: FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-
-        setQuery("");
-    }
-
     function navigateToItemPage(id: number, type: string) {
+        if (type === "insumos") {
+            navigate(`/${type}`);
+        } else {
+            navigate(`/${type}/${id}`);
+        }
+
         setQuery("");
-        navigate(`/${type}/${id}`);
     }
 
     useEffect(() => {
@@ -64,7 +83,15 @@ export function SearchInput() {
             .catch((err) => {
                 console.error(err);
             });
-    }, [pathname, getConstructions]);
+
+        getMaterials()
+            .then((res) => {
+                setMaterials(res);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [pathname, getConstructions, getMaterials]);
 
     return (
         <ClickAwayListener
@@ -73,7 +100,7 @@ export function SearchInput() {
                 setQuery("");
             }}
         >
-            <SearchForm onSubmit={search}>
+            <SearchForm>
                 <TextField
                     required
                     onChange={handleInput}
@@ -81,13 +108,12 @@ export function SearchInput() {
                     type="text"
                     placeholder="Buscar..."
                 />
-                <IconButton aria-label="search" type="submit">
-                    <SearchIcon />
-                </IconButton>
+                <SvgBox>
+                    <SearchIcon aria-label="search" />
+                </SvgBox>
                 {menuIsOpen && filteredItens && (
                     <>
-                        <Box />
-
+                        <WhiteBackgroundBox />
                         <List role="presentation">
                             {filteredItens.length > 0 ? (
                                 filteredItens.map((item) => (
@@ -104,10 +130,9 @@ export function SearchInput() {
                                                     item.type
                                                 );
                                             }}
-                                            disabled={item.type === "erro"}
                                         >
                                             <ListItemIcon>
-                                                <ApartmentIcon />
+                                                {itemTypeHandler[item.type]}
                                             </ListItemIcon>
                                             <ListItemText primary={item.name} />
                                         </ListItemButton>
