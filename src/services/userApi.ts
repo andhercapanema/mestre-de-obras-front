@@ -18,12 +18,8 @@ export type getUserResponse = {
     email: string;
 };
 
-async function getUser(token: string | undefined): Promise<getUserResponse> {
-    const response = await api.get("/users", {
-        headers: {
-            Authorization: `Bearer ${token ?? ""}`,
-        },
-    });
+async function getUser(): Promise<getUserResponse> {
+    const response = await api.get("/users");
     return response.data;
 }
 

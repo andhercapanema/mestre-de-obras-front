@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import useAsync from "../useAsync";
-import useToken from "../useToken";
 import {
     constructionApi,
     type Construction,
@@ -8,8 +7,6 @@ import {
 import { type ConstructionForm } from "../../pages";
 
 export default function useConstructionPost() {
-    const token = useToken();
-
     const {
         data: construction,
         loading: postConstructionIsLoading,
@@ -17,8 +14,8 @@ export default function useConstructionPost() {
         act: postConstruction,
     } = useAsync<ConstructionForm, Construction>(
         useCallback(
-            async (body) => await constructionApi.postConstruction(token, body),
-            [token]
+            async (body) => await constructionApi.postConstruction(body),
+            []
         ),
         false
     );
