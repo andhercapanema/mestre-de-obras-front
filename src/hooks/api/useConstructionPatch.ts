@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import useAsync from "../useAsync";
-import useToken from "../useToken";
 import {
     constructionApi,
     type Construction,
@@ -8,8 +7,6 @@ import {
 import { type ConstructionForm } from "../../pages";
 
 export default function useConstructionPatch() {
-    const token = useToken();
-
     const {
         data: construction,
         loading: patchConstructionIsLoading,
@@ -19,11 +16,10 @@ export default function useConstructionPatch() {
         useCallback(
             async (body, id) =>
                 await constructionApi.patchConstruction(
-                    token,
                     body as ConstructionForm,
                     id as number
                 ),
-            [token]
+            []
         ),
         false
     );

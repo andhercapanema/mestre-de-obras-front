@@ -5,12 +5,20 @@ import GlobalStyle from "./assets/styles/GlobalStyle";
 import { ProtectedRouteGuard } from "./components/ProtectedRouteGuard";
 import { ContextsProvider } from "./contexts/ContextsProvider";
 import { Theme } from "./layouts/Theme";
-import { Constructions, Home, NewConstruction, SignIn, SignUp } from "./pages";
+import {
+    ConstructionDetail,
+    Constructions,
+    ConstructionsList,
+    Home,
+    MaterialsList,
+    NewConstruction,
+    SignIn,
+    SignUp,
+} from "./pages";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import ptBR from "date-fns/locale/pt-BR";
-import { ConstructionDetail } from "./pages/Constructions/ConstructionDetail";
-import { ConstructionsList } from "./pages/Constructions/ConstructionsList";
+import { Materials } from "./pages/Materials";
 
 export function App() {
     return (
@@ -48,15 +56,24 @@ export function App() {
                                         <Route
                                             path="/obras"
                                             element={<ConstructionsList />}
-                                        ></Route>
+                                        />
                                         <Route
                                             path="/obras/cadastro"
                                             element={<NewConstruction />}
-                                        ></Route>
+                                        />
                                         <Route
                                             path="/obras/:id"
                                             element={<ConstructionDetail />}
-                                        ></Route>
+                                        />
+                                    </Route>
+                                    <Route
+                                        path="/insumos"
+                                        element={<Materials />}
+                                    >
+                                        <Route
+                                            path="/insumos"
+                                            element={<MaterialsList />}
+                                        />
                                     </Route>
                                 </Route>
                             </Routes>

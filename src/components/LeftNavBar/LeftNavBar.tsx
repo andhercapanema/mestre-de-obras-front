@@ -21,7 +21,7 @@ export function LeftNavBar({ drawerIsOpen }: { drawerIsOpen: boolean }) {
     const { pathname } = useLocation();
     const pagesList = [
         { name: "obras", icon: <ApartmentIcon /> },
-        { name: "materiais", icon: <WidgetsIcon /> },
+        { name: "insumos", icon: <WidgetsIcon /> },
     ];
 
     return (

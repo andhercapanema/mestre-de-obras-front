@@ -1,14 +1,11 @@
 import { useCallback } from "react";
 import useAsync from "../useAsync";
-import useToken from "../useToken";
 import {
     type Construction,
     constructionApi,
 } from "../../services/constructionApi";
 
 export default function useConstructionDelete() {
-    const token = useToken();
-
     const {
         loading: deleteConstructionIsLoading,
         error: deleteConstructionError,
@@ -16,8 +13,8 @@ export default function useConstructionDelete() {
     } = useAsync<number, Construction>(
         useCallback(
             async (id: number) =>
-                await constructionApi.deleteConstructionById(token, id),
-            [token]
+                await constructionApi.deleteConstructionById(id),
+            []
         ),
         false
     );
