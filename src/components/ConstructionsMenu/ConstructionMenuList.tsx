@@ -3,7 +3,7 @@ import { SelectConstructionTypography } from "./style";
 import useConstructions from "../../hooks/api/useConstructions";
 import { useContext, useEffect, useState } from "react";
 import ConstructionContext from "../../contexts/ConstructionContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
     type getConstructionsResponse,
     type Construction,
@@ -16,25 +16,28 @@ export function ConstructionMenuList({
     open,
     mt,
     ml,
-    navigateOnClick,
 }: {
     anchorEl: HTMLElement | null;
     setAnchorEl: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
     open: boolean;
     mt?: number;
     ml?: number;
-    navigateOnClick?: boolean;
 }) {
     const { getConstructions } = useConstructions();
     const [constructionsList, setConstructionsList] =
         useState<getConstructionsResponse | null>(null);
     const { construction, setConstruction } = useContext(ConstructionContext);
     const navigate = useNavigate();
+    const { pathname } = useLocation();
 
     const handleClose = (construction: Construction | null) => {
         setAnchorEl(null);
         setConstruction(construction);
-        if (construction && navigateOnClick)
+        if (
+            construction &&
+            (pathname.split("/")[1] === "obras" ||
+                pathname.split("/")[1] === "insumos")
+        )
             navigate(`/obras/${construction.id}`);
     };
 

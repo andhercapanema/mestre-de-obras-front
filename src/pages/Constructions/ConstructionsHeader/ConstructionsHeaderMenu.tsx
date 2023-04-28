@@ -53,7 +53,6 @@ export function ConstructionsHeaderMenu() {
                 open={open}
                 mt={1}
                 ml={0}
-                navigateOnClick={true}
             />
         </Box>
     );

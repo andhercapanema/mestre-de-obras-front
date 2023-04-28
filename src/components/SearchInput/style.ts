@@ -1,5 +1,6 @@
 import { styled } from "@mui/material/styles";
 import { themeOptions } from "../../layouts/Theme";
+import { Box } from "@mui/material";
 
 export const SearchForm = styled("form")`
     display: flex;
@@ -19,20 +20,6 @@ export const SearchForm = styled("form")`
 
     .MuiOutlinedInput-notchedOutline {
         border: none;
-    }
-
-    .MuiButtonBase-root {
-        border-radius: 0 5px 5px 0;
-    }
-
-    .MuiBox-root {
-        position: absolute;
-        background-color: ${themeOptions.palette.background.paper};
-        left: 0;
-        top: calc(100% + 6.5px);
-        width: 100%;
-        height: 10px;
-        z-index: 1101;
     }
 
     .MuiList-root {
@@ -58,4 +45,21 @@ export const SearchForm = styled("form")`
     .MuiListItemIcon-root {
         min-width: 40px;
     }
+`;
+
+export const SvgBox = styled(Box)`
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+    color: ${({ theme }) => theme.palette.text.disabled};
+`;
+
+export const WhiteBackgroundBox = styled(Box)`
+    position: absolute;
+    background-color: ${themeOptions.palette.background.paper};
+    left: 0;
+    top: calc(100% + 6.5px);
+    width: 100%;
+    height: 10px;
+    z-index: 1101;
 `;
