@@ -14,6 +14,8 @@ import { type AxiosError } from "axios";
 import { Auth } from "../../layouts/Auth";
 import useLogin from "../../hooks/api/useSignIn";
 import UserContext from "../../contexts/UserContext";
+import api from "../../services/api";
+import { type LoginResponse } from "../../services/authApi";
 
 export type LoginForm = {
     email: string;
@@ -45,6 +47,13 @@ export function SignIn() {
         try {
             const userData = await login(form);
             setUserData(userData);
+            api.defaults.headers.Authorization = `Bearer ${
+                (
+                    JSON.parse(
+                        localStorage.getItem("userData") as string
+                    ) as LoginResponse
+                )?.token
+            }`;
             toast.success("Login realizado com sucesso!");
             navigate("/");
         } catch (err) {
