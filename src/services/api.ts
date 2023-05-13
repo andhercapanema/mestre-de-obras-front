@@ -7,9 +7,9 @@ const instance = axios.create({
         Authorization: `Bearer ${
             (
                 JSON.parse(
-                    localStorage.getItem("userData") ?? ""
+                    localStorage.getItem("userData") as string
                 ) as LoginResponse
-            ).token
+            )?.token
         }`,
     },
 });
